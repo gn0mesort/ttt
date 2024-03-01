@@ -4,12 +4,14 @@
 
 constexpr const char* LOCK_NAME{ "x" };
 
+// Test lockfile lock/relock behavior.
 void test_basic_locking_1() {
   auto l = megatech::ttt::lockfile{ LOCK_NAME };
   assert(l.try_lock() == true);
   assert(l.try_lock() == false);
 }
 
+// Test that two lockfiles cannot lock the same file.
 void test_basic_locking_2() {
   auto l = megatech::ttt::lockfile{ LOCK_NAME };
   auto l2 = megatech::ttt::lockfile{ LOCK_NAME };
@@ -20,6 +22,7 @@ void test_basic_locking_2() {
   assert(l.try_lock() == false);
 }
 
+// Test scoped lock/unlock behavior.
 void test_scoped_locking_1() {
   auto l = megatech::ttt::lockfile{ LOCK_NAME };
   {
@@ -29,6 +32,7 @@ void test_scoped_locking_1() {
   assert(l.try_lock() == true);
 }
 
+// Test two scoped locks locking the same lockfile.
 void test_scoped_locking_2() {
   auto l = megatech::ttt::lockfile{ LOCK_NAME };
   {
@@ -43,6 +47,7 @@ void test_scoped_locking_2() {
   }
 }
 
+// Test two scoped locks locking two lockfiles that refer to the same file.
 void test_scoped_locking_3() {
   auto l = megatech::ttt::lockfile{ LOCK_NAME };
   auto l2 = megatech::ttt::lockfile{ LOCK_NAME };
