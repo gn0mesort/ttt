@@ -1,34 +1,69 @@
+#include <cassert>
+
 #include "megatech/ttt/file_lock.hpp"
 
-int main() {
-  auto l = megatech::ttt::lockfile{ "x" };
+constexpr const char* LOCK_NAME{ "x" };
+
+void test_basic_locking_1() {
+  auto l = megatech::ttt::lockfile{ LOCK_NAME };
+  assert(l.try_lock() == true);
+  assert(l.try_lock() == false);
+}
+
+void test_basic_locking_2() {
+  auto l = megatech::ttt::lockfile{ LOCK_NAME };
+  auto l2 = megatech::ttt::lockfile{ LOCK_NAME };
+  assert(l.try_lock() == true);
+  assert(l2.try_lock() == false);
+  l.unlock();
+  assert(l2.try_lock() == true);
+  assert(l.try_lock() == false);
+}
+
+void test_scoped_locking_1() {
+  auto l = megatech::ttt::lockfile{ LOCK_NAME };
   {
     auto sfl = megatech::ttt::scoped_file_lock{ l };
-    if (l.try_lock())
-    {
-      return 1;
-    }
+    assert(l.try_lock() == false);
+  }
+  assert(l.try_lock() == true);
+}
+
+void test_scoped_locking_2() {
+  auto l = megatech::ttt::lockfile{ LOCK_NAME };
+  {
+    auto sfl = megatech::ttt::scoped_file_lock{ l };
     try
     {
       auto sfl2 = megatech::ttt::scoped_file_lock{ l };
-      return 1;
+      assert(false);
     }
-    catch (const std::exception& ex) { }
-    if (l.try_lock())
-    {
-      return 1;
-    }
-    auto l2 = megatech::ttt::lockfile{ "x" };
+    catch (...) { }
+    assert(l.try_lock() == false);
+  }
+}
+
+void test_scoped_locking_3() {
+  auto l = megatech::ttt::lockfile{ LOCK_NAME };
+  auto l2 = megatech::ttt::lockfile{ LOCK_NAME };
+  {
+    auto sfl = megatech::ttt::scoped_file_lock{ l };
     try
     {
-      auto sfl3 = megatech::ttt::scoped_file_lock{ l2 };
-      return 1;
+      auto sfl2 = megatech::ttt::scoped_file_lock{ l2 };
+      assert(false);
     }
-    catch (const std::exception& ex) { }
-    if (l2.try_lock())
-    {
-      return 1;
-    }
+    catch (...) { }
+    assert(l.try_lock() == false);
+    assert(l2.try_lock() == false);
   }
+}
+
+int main() {
+  test_basic_locking_1();
+  test_basic_locking_2();
+  test_scoped_locking_1();
+  test_scoped_locking_2();
+  test_scoped_locking_3();
   return 0;
 }
