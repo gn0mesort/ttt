@@ -40,13 +40,13 @@ namespace megatech::ttt {
       f_in.read(reinterpret_cast<char*>(&m_file_body), sizeof(game_file::body_v1));
       switch (m_file_body.endianness)
       {
-      case CORRECT_ENDIANNESS:
-        break;
       case REVERSE_ENDIANNESS:
         m_file_body.state = BSWAP32(m_file_body.state);
         m_file_body.endianness = CORRECT_ENDIANNESS;
+      case CORRECT_ENDIANNESS:
+        break;
       default:
-        throw std::runtime_error{ "The game data file is corrupt." };
+        throw std::runtime_error{ "The game data file is corrupt or it was written with an unknown byte order." };
       }
     }
     else

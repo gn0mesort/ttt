@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cinttypes>
 
+#include <iosfwd>
 #include <filesystem>
 
 namespace megatech::ttt {
