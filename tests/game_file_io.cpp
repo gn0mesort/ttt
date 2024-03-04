@@ -25,7 +25,7 @@ void test_new_game_read_write() {
   assert(header.version == megatech::ttt::details::DATA_FILE_VERSION_1);
   auto body = megatech::ttt::details::data_file_body_v1{ };
   f_in.read(reinterpret_cast<char*>(&body), sizeof(megatech::ttt::details::data_file_body_v1));
-  assert(body.endianness == megatech::ttt::details::CORRECT_ENDIANNESS);
+  assert(body.endianness == megatech::ttt::details::DATA_FILE_CORRECT_ENDIANNESS);
   assert(body.state == 0);
   std::filesystem::remove_all(GAME_FILE_NAME);
 }
@@ -53,7 +53,7 @@ void test_existing_file_read_write() {
     header.version = megatech::ttt::details::DATA_FILE_VERSION_1;
     f_out.write(reinterpret_cast<char*>(&header), sizeof(megatech::ttt::details::data_file_header));
     auto body = megatech::ttt::details::data_file_body_v1{ };
-    body.endianness = megatech::ttt::details::CORRECT_ENDIANNESS;
+    body.endianness = megatech::ttt::details::DATA_FILE_CORRECT_ENDIANNESS;
     body.state = STATE_VALUE;
     f_out.write(reinterpret_cast<char*>(&body), sizeof(megatech::ttt::details::data_file_body_v1));
   }
@@ -70,7 +70,7 @@ void test_existing_file_read_write() {
   assert(header.version == megatech::ttt::details::DATA_FILE_VERSION_1);
   auto body = megatech::ttt::details::data_file_body_v1{ };
   f_in.read(reinterpret_cast<char*>(&body), sizeof(megatech::ttt::details::data_file_body_v1));
-  assert(body.endianness == megatech::ttt::details::CORRECT_ENDIANNESS);
+  assert(body.endianness == megatech::ttt::details::DATA_FILE_CORRECT_ENDIANNESS);
   assert(body.state == STATE_VALUE);
   std::filesystem::remove_all(GAME_FILE_NAME);
 }
@@ -84,7 +84,7 @@ void test_corrupt_file_header() {
     header.version = 0xff;
     f_out.write(reinterpret_cast<char*>(&header), sizeof(megatech::ttt::details::data_file_header));
     auto body = megatech::ttt::details::data_file_body_v1{ };
-    body.endianness = megatech::ttt::details::CORRECT_ENDIANNESS;
+    body.endianness = megatech::ttt::details::DATA_FILE_CORRECT_ENDIANNESS;
     body.state = 0;
     f_out.write(reinterpret_cast<char*>(&body), sizeof(megatech::ttt::details::data_file_body_v1));
   }
@@ -132,7 +132,7 @@ void test_state_byteswapping() {
     header.version = megatech::ttt::details::DATA_FILE_VERSION_1;
     f_out.write(reinterpret_cast<char*>(&header), sizeof(megatech::ttt::details::data_file_header));
     auto body = megatech::ttt::details::data_file_body_v1{ };
-    body.endianness = megatech::ttt::details::REVERSE_ENDIANNESS;
+    body.endianness = megatech::ttt::details::DATA_FILE_REVERSE_ENDIANNESS;
     body.state = REVERSE_STATE_VALUE;
     f_out.write(reinterpret_cast<char*>(&body), sizeof(megatech::ttt::details::data_file_body_v1));
   }
@@ -149,7 +149,7 @@ void test_state_byteswapping() {
   assert(header.version == megatech::ttt::details::DATA_FILE_VERSION_1);
   auto body = megatech::ttt::details::data_file_body_v1{ };
   f_in.read(reinterpret_cast<char*>(&body), sizeof(megatech::ttt::details::data_file_body_v1));
-  assert(body.endianness == megatech::ttt::details::CORRECT_ENDIANNESS);
+  assert(body.endianness == megatech::ttt::details::DATA_FILE_CORRECT_ENDIANNESS);
   assert(body.state == STATE_VALUE);
   std::filesystem::remove_all(GAME_FILE_NAME);
 }

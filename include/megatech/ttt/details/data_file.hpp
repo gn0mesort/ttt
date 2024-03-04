@@ -29,8 +29,8 @@ namespace megatech::ttt::details {
     unsigned char version;
   };
 
-  constexpr const std::uint32_t CORRECT_ENDIANNESS{ 0xaa'bb'cc'dd };
-  constexpr const std::uint32_t REVERSE_ENDIANNESS{ 0xdd'cc'bb'aa };
+  constexpr const std::uint32_t DATA_FILE_CORRECT_ENDIANNESS{ 0xaa'bb'cc'dd };
+  constexpr const std::uint32_t DATA_FILE_REVERSE_ENDIANNESS{ 0xdd'cc'bb'aa };
 
   struct data_file_body_v1 final {
     std::uint32_t endianness;

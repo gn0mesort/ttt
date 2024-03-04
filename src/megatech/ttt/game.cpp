@@ -46,10 +46,10 @@ namespace megatech::ttt {
         f_in.read(reinterpret_cast<char*>(&body), sizeof(details::data_file_body_v1));
         switch (body.endianness)
         {
-        case details::REVERSE_ENDIANNESS:
+        case details::DATA_FILE_REVERSE_ENDIANNESS:
           m_state = BSWAP32(body.state);
           break;
-        case details::CORRECT_ENDIANNESS:
+        case details::DATA_FILE_CORRECT_ENDIANNESS:
           m_state = body.state;
           break;
         default:
@@ -76,7 +76,7 @@ namespace megatech::ttt {
       header.version = details::DATA_FILE_VERSION_1;
       f_out.write(reinterpret_cast<char*>(&header), sizeof(details::data_file_header));
       auto body = details::data_file_body_v1{ };
-      body.endianness = details::CORRECT_ENDIANNESS;
+      body.endianness = details::DATA_FILE_CORRECT_ENDIANNESS;
       body.state = m_state;
       f_out.write(reinterpret_cast<char*>(&body), sizeof(details::data_file_body_v1));
     }
