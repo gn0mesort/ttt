@@ -19,7 +19,8 @@ ttt_lib_incs = [
 ]
 
 ttt_lib_srcs = [
-  files('src/megatech/ttt/file_lock.cpp')
+  files('src/megatech/ttt/game.cpp'),
+  files('src/megatech/ttt/details/lockfile.cpp')
 ]
 
 ttt_lib = library(meson.project_name(), ttt_lib_srcs, include_directories: ttt_lib_incs)
