@@ -1,7 +1,9 @@
 #include "megatech/ttt/game.hpp"
 
 #include <cstring>
+#include <cassert>
 
+#include <stdexcept>
 #include <fstream>
 
 #include "megatech/ttt/details/data_file.hpp"
@@ -13,6 +15,30 @@
     (((x) & 0xff'00'00'00) >> 24))
 
 namespace megatech::ttt {
+
+  std::string to_string(const game_mode mode) {
+    switch (mode)
+    {
+    case game_mode::single_player:
+      return "single";
+    case game_mode::multiplayer:
+      return "multiplayer";
+    default:
+      assert(((void) "Unreachable", false));
+    }
+  }
+
+  game_mode to_game_mode(const std::string& name) {
+    if (name == to_string(game_mode::single_player))
+    {
+      return game_mode::single_player;
+    }
+    else if (name == to_string(game_mode::multiplayer))
+    {
+      return game_mode::multiplayer;
+    }
+    throw std::runtime_error{ "The input game mode was not recognized." };
+  }
 
   game::game(const std::filesystem::path& path) : m_path{ std::filesystem::absolute(path) },
                                                   m_lock{ m_path } {
@@ -81,6 +107,18 @@ namespace megatech::ttt {
       f_out.write(reinterpret_cast<char*>(&body), sizeof(details::data_file_body_v1));
     }
     m_lock.unlock();
+  }
+
+  void game::clear() {
+    m_state = 0;
+  }
+
+  game_mode game::get_mode() const {
+    return static_cast<game_mode>(m_state & MULTIPLAYER_BIT);
+  }
+
+  void game::set_mode(const game_mode m) {
+    m_state = (m_state & ~MULTIPLAYER_BIT) | static_cast<std::uint32_t>(m);
   }
 
 }
