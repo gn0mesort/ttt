@@ -14,16 +14,42 @@ project(
   subproject_dir: 'lib'
 )
 
+ttt_config = configuration_data()
+if true
+  os = host_machine.system()
+  ttt_config.set_quoted('CONFIGURATION_OPERATING_SYSTEM_NAME', os)
+  if os == 'windows' or os == 'cygwin'
+    ttt_config.set('CONFIGURATION_OPERATING_SYSTEM_WINDOWS', 1)
+  else
+    ttt_config.set('CONFIGURATION_OPERATING_SYSTEM_POSIX', 1)
+  endif
+endif
+
 ttt_lib_incs = [
   include_directories('include')
 ]
 
 ttt_lib_srcs = [
-  files('src/megatech/ttt/game.cpp'),
+  configure_file(input: files('generated/configuration.hpp.in'), output: 'configuration.hpp',
+                 configuration: ttt_config),
+  files('src/megatech/ttt/game.cpp', 'src/megatech/ttt/utility.cpp'),
   files('src/megatech/ttt/details/lockfile.cpp')
 ]
 
 ttt_lib = library(meson.project_name(), ttt_lib_srcs, include_directories: ttt_lib_incs)
 ttt_dep = declare_dependency(link_with: ttt_lib, include_directories: ttt_lib_incs)
+
+ttt_new_game_srcs = [
+  files('src/new_game.cpp')
+]
+
+ttt_new_game_exe = executable('@0@-new-game'.format(meson.project_name()), ttt_new_game_srcs, dependencies: ttt_dep)
+
+ttt_delete_game_srcs = [
+  files('src/delete_game.cpp')
+]
+
+ttt_delete_game_exe = executable('@0@-delete-game'.format(meson.project_name()), ttt_delete_game_srcs,
+                                 dependencies: ttt_dep)
 
 subdir('tests')
