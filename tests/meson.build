@@ -28,4 +28,6 @@ if true
       test('Generic Home Directory Location', home_directories_exe, env: environ)
     endif
   endif
+  turn_taking_test_exe = executable('turn_taking_test', files('turn_taking.cpp'), dependencies: ttt_dep)
+  test('Turn Taking', turn_taking_test_exe)
 endif
