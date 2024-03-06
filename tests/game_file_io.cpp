@@ -9,11 +9,12 @@
 #include "megatech/ttt/details/data_file.hpp"
 
 #define GAME_FILE_NAME ".ttt"
+#define LOCK_FILE_NAME ".~lock.ttt"
 
 void test_new_game_read_write() {
   std::filesystem::remove_all(GAME_FILE_NAME);
   {
-    auto g = megatech::ttt::game{ GAME_FILE_NAME };
+    auto g = megatech::ttt::game{ GAME_FILE_NAME, megatech::ttt::game_mode::single_player };
   }
   auto f_in = std::ifstream{ GAME_FILE_NAME, std::ios::binary | std::ios::ate };
   assert(static_cast<std::size_t>(f_in.tellg()) > sizeof(megatech::ttt::details::data_file_header));
@@ -155,10 +156,18 @@ void test_state_byteswapping() {
 }
 
 int main() {
-  test_new_game_read_write();
-  test_irregular_file();
-  test_existing_file_read_write();
-  test_corrupt_file_header();
-  test_state_byteswapping();
+  try
+  {
+    test_new_game_read_write();
+    test_irregular_file();
+    test_existing_file_read_write();
+    test_corrupt_file_header();
+    test_state_byteswapping();
+  }
+  catch (...)
+  {
+    std::filesystem::remove_all(GAME_FILE_NAME);
+    throw;
+  }
   return 0;
 }
