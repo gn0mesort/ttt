@@ -30,4 +30,7 @@ if true
   endif
   turn_taking_test_exe = executable('turn_taking_test', files('turn_taking.cpp'), dependencies: ttt_dep)
   test('Turn Taking', turn_taking_test_exe)
+  game_mode_strings_test_exe = executable('game_mode_strings_test', files('game_mode_strings.cpp'),
+                                           dependencies: ttt_dep)
+  test('Game Mode Strings', game_mode_strings_test_exe)
 endif

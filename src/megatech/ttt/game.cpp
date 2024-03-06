@@ -25,7 +25,7 @@ namespace megatech::ttt {
     case game_mode::multiplayer:
       return "multiplayer";
     default:
-      assert(((void) "Unreachable", false));
+      throw std::runtime_error{ "The input game mode was not a valid enumeration value." };
     }
   }
 
