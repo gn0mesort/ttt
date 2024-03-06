@@ -52,4 +52,17 @@ ttt_delete_game_srcs = [
 ttt_delete_game_exe = executable('@0@-delete-game'.format(meson.project_name()), ttt_delete_game_srcs,
                                  dependencies: ttt_dep)
 
+ttt_display_game_srcs = [
+  files('src/display_game.cpp')
+]
+
+ttt_display_game_exe = executable('@0@-display-game'.format(meson.project_name()), ttt_display_game_srcs,
+                                  dependencies: ttt_dep)
+
+ttt_take_turn_srcs = [
+  files('src/take_turn.cpp')
+]
+
+ttt_take_turn_exe = executable('@0@-take-turn'.format(meson.project_name()), ttt_take_turn_srcs, dependencies: ttt_dep)
+
 subdir('tests')
