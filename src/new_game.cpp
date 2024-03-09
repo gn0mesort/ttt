@@ -9,17 +9,10 @@
 #include <megatech/ttt/utility.hpp>
 
 int main(int argc, char** argv) {
-  if (argc < 2)
-  {
-    std::cerr << "Too few program arguments were found. Please run either:" << std::endl
-              << "\t" << argv[0] << " single" << std::endl
-              << "\t" << argv[0] << " multiplayer" << std::endl
-              << "for a single player or multiplayer game respectively." << std::endl;
-    return 1;
-  }
   try
   {
     auto mode = megatech::ttt::game_mode::single_player;
+    if (argc >= 2)
     {
       auto mode_str = std::string{ argv[1] };
       for (auto& c : mode_str)

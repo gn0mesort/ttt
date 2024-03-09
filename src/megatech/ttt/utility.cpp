@@ -32,6 +32,10 @@ namespace megatech::ttt {
     }
 #endif
 done:
+    if (home_path.empty())
+    {
+      throw std::runtime_error{ "The user's home directory could not be detected." };
+    }
     auto stat = std::filesystem::status(home_path);
     if (!std::filesystem::status_known(stat))
     {
