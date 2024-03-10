@@ -37,4 +37,6 @@ if get_option('buildtype') == 'debug' or get_option('buildtype') == 'debugoptimi
   test('Frobnication', frobnication_test_exe)
   interpreter_test_exe = executable('interpreter_test', files('interpreter.cpp'), dependencies: ttt_dep)
   test('Interpreter', interpreter_test_exe)
+  utilities_test_exe = executable('utilities_text', files('utilities.cpp'), dependencies: ttt_dep)
+  test('General Utilities', utilities_test_exe)
 endif

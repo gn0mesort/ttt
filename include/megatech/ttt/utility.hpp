@@ -34,10 +34,7 @@ namespace megatech::ttt {
 
   std::uint32_t initialize(const int argc, const char *const *const argv);
 
-  void initialize_preferred_locale();
-
   std::filesystem::path find_home_directory();
-
 
   std::string tolower(const std::string& str);
 
