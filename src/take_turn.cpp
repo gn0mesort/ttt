@@ -13,12 +13,16 @@ void display_help(const std::string& name, const std::string& message) {
 }
 
 int main(int argc, char** argv) {
-  if (argc < 3)
-  {
-    display_help(argv[0], "Too few program arguments were provided.");
-  }
   try
   {
+    if (auto res = megatech::ttt::initialize(argc, argv); res)
+    {
+      return res;
+    }
+    if (argc < 3)
+    {
+      display_help(argv[0], "Too few program arguments were provided.");
+    }
     auto column = std::size_t{ 0 };
     auto row = std::size_t{ 0 };
     {

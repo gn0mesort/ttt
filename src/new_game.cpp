@@ -1,5 +1,3 @@
-#include <cctype>
-
 #include <stdexcept>
 #include <filesystem>
 #include <iostream>
@@ -11,15 +9,15 @@
 int main(int argc, char** argv) {
   try
   {
+    if (auto res = megatech::ttt::initialize(argc, argv); res)
+    {
+      return res;
+    }
     auto mode = megatech::ttt::game_mode::single_player;
     if (argc >= 2)
     {
       auto mode_str = std::string{ argv[1] };
-      for (auto& c : mode_str)
-      {
-        c = std::tolower(c);
-      }
-      mode = megatech::ttt::to_game_mode(mode_str);
+      mode = megatech::ttt::to_game_mode(megatech::ttt::tolower(mode_str));
     }
     auto home_dir = megatech::ttt::find_home_directory();
     auto game_path = home_dir / megatech::ttt::DEFAULT_GAME_NAME;

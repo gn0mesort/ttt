@@ -8,7 +8,7 @@ project(
     'warning_level=3',
     'b_ndebug=if-release',
     'b_pie=true',
-    'b_sanitize=address',
+    'b_lto=true',
     'cpp_args=-fstrict-aliasing -Wstrict-aliasing=3'
   ],
   subproject_dir: 'lib'
@@ -33,7 +33,8 @@ ttt_lib_srcs = [
   configure_file(input: files('generated/configuration.hpp.in'), output: 'configuration.hpp',
                  configuration: ttt_config),
   files('src/megatech/ttt/game.cpp', 'src/megatech/ttt/utility.cpp', 'src/megatech/ttt/enums.cpp'),
-  files('src/megatech/ttt/details/lockfile.cpp', 'src/megatech/ttt/details/state.cpp')
+  files('src/megatech/ttt/details/lockfile.cpp', 'src/megatech/ttt/details/state.cpp',
+        'src/megatech/ttt/details/interpreter.cpp')
 ]
 
 ttt_lib = library(meson.project_name(), ttt_lib_srcs, include_directories: ttt_lib_incs)

@@ -1,4 +1,4 @@
-if true
+if get_option('buildtype') == 'debug' or get_option('buildtype') == 'debugoptimized'
   file_locking_test_exe = executable('file_locking_test', files('file_locking.cpp'), dependencies: ttt_dep)
   test('File Locking', file_locking_test_exe, is_parallel: false)
   game_file_io_test_exe = executable('game_file_io_test', files('game_file_io.cpp'), dependencies: ttt_dep)
@@ -33,4 +33,8 @@ if true
   enum_strings_test_exe = executable('enum_strings_test', files('enum_strings.cpp'),
                                            dependencies: ttt_dep)
   test('Enum Type Strings', enum_strings_test_exe, is_parallel: false)
+  frobnication_test_exe = executable('frobnication_test', files('frobnication.cpp'), dependencies: ttt_dep)
+  test('Frobnication', frobnication_test_exe)
+  interpreter_test_exe = executable('interpreter_test', files('interpreter.cpp'), dependencies: ttt_dep)
+  test('Interpreter', interpreter_test_exe)
 endif
