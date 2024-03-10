@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+
+# LCOV and coverage
+*.lcov.info
+coverage/
+coverage-*/
