@@ -44,7 +44,8 @@ void test_irregular_file() {
 }
 
 void test_existing_file_read_write() {
-  constexpr const auto STATE_VALUE = 0xba'dd'ad'ff;
+  // This is a crafted value that will pass validation but is otherwise a meaningless state.
+  constexpr const auto STATE_VALUE = 0x90'01'55'55;
   std::filesystem::remove_all(GAME_FILE_NAME);
   {
     auto f_out = std::ofstream{ GAME_FILE_NAME, std::ios::binary | std::ios::trunc };
@@ -122,8 +123,9 @@ void test_corrupt_file_body() {
 }
 
 void test_state_byteswapping() {
-  constexpr const auto STATE_VALUE = 0xba'dd'ad'ff;
-  constexpr const auto REVERSE_STATE_VALUE = 0xff'ad'dd'ba;
+  // This is a crafted value that will pass validation but is otherwise a meaningless state.
+  constexpr const auto STATE_VALUE = 0x90'01'55'55;
+  constexpr const auto REVERSE_STATE_VALUE = 0x55'55'01'90;
   std::filesystem::remove_all(GAME_FILE_NAME);
   {
     auto f_out = std::ofstream{ GAME_FILE_NAME, std::ios::binary | std::ios::trunc };

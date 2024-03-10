@@ -32,8 +32,8 @@ ttt_lib_incs = [
 ttt_lib_srcs = [
   configure_file(input: files('generated/configuration.hpp.in'), output: 'configuration.hpp',
                  configuration: ttt_config),
-  files('src/megatech/ttt/game.cpp', 'src/megatech/ttt/utility.cpp'),
-  files('src/megatech/ttt/details/lockfile.cpp')
+  files('src/megatech/ttt/game.cpp', 'src/megatech/ttt/utility.cpp', 'src/megatech/ttt/enums.cpp'),
+  files('src/megatech/ttt/details/lockfile.cpp', 'src/megatech/ttt/details/state.cpp')
 ]
 
 ttt_lib = library(meson.project_name(), ttt_lib_srcs, include_directories: ttt_lib_incs)

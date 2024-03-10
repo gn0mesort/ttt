@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     auto game_path = megatech::ttt::find_home_directory() / megatech::ttt::DEFAULT_GAME_NAME;
     auto g = megatech::ttt::game{ game_path };
     g.take_turn(column, row);
-    switch (g.get_mode())
+    switch (g.state().mode())
     {
     case megatech::ttt::game_mode::single_player:
       // TODO: CPU Player takes a turn.

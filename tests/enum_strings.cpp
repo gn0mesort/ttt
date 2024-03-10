@@ -3,11 +3,14 @@
 
 #include <string>
 
-#include <megatech/ttt/game.hpp>
+#include <megatech/ttt/enums.hpp>
 
 void test_to_string() {
   assert(megatech::ttt::to_string(megatech::ttt::game_mode::single_player) == std::string{ "single" });
   assert(megatech::ttt::to_string(megatech::ttt::game_mode::multiplayer) == std::string{ "multiplayer" });
+  assert(megatech::ttt::to_string(megatech::ttt::cell_contents::empty) == std::string{ " " });
+  assert(megatech::ttt::to_string(megatech::ttt::cell_contents::x) == std::string{ "X" });
+  assert(megatech::ttt::to_string(megatech::ttt::cell_contents::o) == std::string{ "O" });
 }
 
 void test_to_game_mode() {
@@ -16,10 +19,17 @@ void test_to_game_mode() {
 }
 
 void test_bad_enums() {
-  auto bad = static_cast<megatech::ttt::game_mode>(12);
+  auto bad_mode = static_cast<megatech::ttt::game_mode>(12);
   try
   {
-    megatech::ttt::to_string(bad);
+    megatech::ttt::to_string(bad_mode);
+    assert(false);
+  }
+  catch (...) { }
+  auto bad_contents = static_cast<megatech::ttt::cell_contents>(12);
+  try
+  {
+    megatech::ttt::to_string(bad_contents);
     assert(false);
   }
   catch (...) { }
@@ -38,6 +48,6 @@ int main() {
   test_to_string();
   test_to_game_mode();
   test_bad_enums();
-  test_to_game_mode();
+  test_bad_strings();
   return 0;
 }
