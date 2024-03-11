@@ -18,6 +18,8 @@ namespace {
 
 #include "secret_001.inl"
 #include "response_001.inl"
+#include "secret_002.inl"
+#include "response_002.inl"
 
   template <megatech::ttt::details::byte_range Range>
   std::vector<char> deobfuscate(Range&& r) {
@@ -28,8 +30,10 @@ namespace {
   }
 
   std::string secret(const std::string& password) {
-    auto secrets = std::array<std::string, 1>{ std::string{ reinterpret_cast<const char*>(secret_001) } };
-    auto responses = std::array<std::string, 1>{ std::string{ reinterpret_cast<const char*>(response_001) } };
+    auto secrets = std::array<std::string, 2>{ std::string{ reinterpret_cast<const char*>(secret_001) },
+                                               std::string{ reinterpret_cast<const char*>(secret_002) } };
+    auto responses = std::array<std::string, 2>{ std::string{ reinterpret_cast<const char*>(response_001) },
+                                                 std::string{ reinterpret_cast<const char*>(response_002) } };
     {
       auto index = 0;
       for (const auto& secret : secrets)
