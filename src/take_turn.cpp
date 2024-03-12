@@ -5,6 +5,7 @@
 #include <string>
 
 #include <megatech/ttt/game.hpp>
+#include <megatech/ttt/strategy.hpp>
 #include <megatech/ttt/utility.hpp>
 
 void display_help(const std::string& name, const std::string& message) {
@@ -43,13 +44,12 @@ int main(int argc, char** argv) {
     auto game_path = megatech::ttt::find_home_directory() / megatech::ttt::DEFAULT_GAME_NAME;
     auto g = megatech::ttt::game{ game_path };
     g.take_turn(column, row);
-    switch (g.state().mode())
+    if (g.state().phase() == megatech::ttt::game_phase::turn_o &&
+        g.state().mode() == megatech::ttt::game_mode::single_player)
     {
-    case megatech::ttt::game_mode::single_player:
-      // TODO: CPU Player takes a turn.
-      break;
-    default:
-      break;
+      auto strat = megatech::ttt::strategy{ };
+      auto location = strat(g, { column, row });
+      g.take_turn(location.column, location.row);
     }
     std::cout << g << std::endl;
   }

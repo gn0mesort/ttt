@@ -1,7 +1,5 @@
 #include "megatech/ttt/details/state.hpp"
 
-#include <cstddef>
-
 #include <bit>
 #include <stdexcept>
 #include <array>
@@ -60,12 +58,16 @@ namespace megatech::ttt::details {
     m_data = (m_data & ~GAME_PHASE_MASK) | gp_bits;
   }
 
+  std::uint32_t state::board() const {
+    return m_data & GAME_BOARD_MASK;
+  }
+
   bool state::is_board_empty() const {
-    return (m_data & GAME_BOARD_MASK) == 0;
+    return filled_cells() == 0;
   }
 
   bool state::is_board_full() const {
-    return std::popcount(m_data & GAME_BOARD_MASK) >= 9;
+    return filled_cells() >= 9;
   }
 
   bool state::is_row_x(const std::size_t row) const {
@@ -138,6 +140,26 @@ namespace megatech::ttt::details {
 
   bool state::is_right_diagonal_o() const {
     return (m_data & BOARD_RIGHT_TO_LEFT_DIAGONAL_MASK) == 0x00'00'22'20;
+  }
+
+  bool state::is_cell_empty(const std::size_t column, const std::size_t row) const {
+    return cell(column, row) == cell_contents::empty;
+  }
+
+  bool state::is_cell_x(const std::size_t column, const std::size_t row) const {
+    return cell(column, row) == cell_contents::x;
+  }
+
+  std::size_t state::filled_cells() const {
+    return std::popcount(board());
+  }
+
+  std::size_t state::count_x() const {
+    return std::popcount(m_data & COUNT_X_MASK);
+  }
+
+  std::size_t state::count_o() const {
+    return std::popcount(m_data & COUNT_O_MASK);
   }
 
   cell_contents state::cell(const std::size_t column, const std::size_t row) const {
