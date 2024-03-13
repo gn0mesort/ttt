@@ -30,6 +30,7 @@ namespace {
   }
 
   std::string secret(const std::string& password) {
+    // Secrets must not contain 0 bytes in their body.
     auto secrets = std::array<std::string, 2>{ std::string{ reinterpret_cast<const char*>(secret_001) },
                                                std::string{ reinterpret_cast<const char*>(secret_002) } };
     auto responses = std::array<std::string, 2>{ std::string{ reinterpret_cast<const char*>(response_001) },

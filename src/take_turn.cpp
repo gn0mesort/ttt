@@ -10,7 +10,8 @@
 
 void display_help(const std::string& name, const std::string& message) {
   std::cerr << message << std::endl;
-  std::cerr << "USAGE: " << name << " COLUMN ROW " << std::endl;
+  std::cerr << "USAGE: " << name << " COLUMN ROW" << std::endl;
+  std::cerr << "\tValid values are \"0\", \"1\", or \"2\" for both columns and rows." << std::endl;
 }
 
 int main(int argc, char** argv) {
@@ -22,7 +23,7 @@ int main(int argc, char** argv) {
     }
     if (argc < 3)
     {
-      display_help(argv[0], "Too few program arguments were provided.");
+      throw std::runtime_error{ "Too few program arguments were provided." };
     }
     auto column = std::size_t{ 0 };
     auto row = std::size_t{ 0 };
@@ -55,7 +56,7 @@ int main(int argc, char** argv) {
   }
   catch (const std::exception& err)
   {
-    std::cerr << "An error occurred:" << std::endl << "\t\"" << err.what() << "\"" << std::endl;
+    display_help(argv[0], err.what());
     return 1;
   }
   return 0;

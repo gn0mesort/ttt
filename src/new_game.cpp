@@ -6,6 +6,15 @@
 #include <megatech/ttt/game.hpp>
 #include <megatech/ttt/utility.hpp>
 
+void display_help(const std::string& name, const std::string& message) {
+  std::cerr << message << std::endl;
+  std::cerr << "USAGE: " << name << " [MODE]" << std::endl;
+  std::cerr << "\tValid modes are:" << std::endl;
+  std::cerr << "\t\t\"single\"\tfor single player games." << std::endl;
+  std::cerr << "\t\t\"multiplayer\"\tfor multiplayer games." << std::endl;
+  std::cerr << "\tIf no argument is provided, a single player game is created." << std::endl;
+}
+
 int main(int argc, char** argv) {
   try
   {
@@ -38,7 +47,7 @@ int main(int argc, char** argv) {
   }
   catch (const std::exception& err)
   {
-    std::cerr << "An error occurred:" << std::endl << "\t\"" << err.what() << "\"" << std::endl;
+    display_help(argv[0], err.what());
     return 1;
   }
   return 0;

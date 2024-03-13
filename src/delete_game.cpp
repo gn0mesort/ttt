@@ -5,6 +5,11 @@
 #include <megatech/ttt/game.hpp>
 #include <megatech/ttt/utility.hpp>
 
+void display_help(const std::string& name, const std::string& message) {
+  std::cerr << message << std::endl;
+  std::cerr << "USAGE: " << name << std::endl;
+}
+
 int main(int argc, char** argv) {
   try
   {
@@ -31,12 +36,12 @@ int main(int argc, char** argv) {
     }
     else
     {
-      std::cerr << "No existing game file found @ " << game_path << "." << std::endl;
+      throw std::runtime_error{ "No existing game file found." };
     }
   }
   catch (const std::exception& err)
   {
-    std::cerr << "An error occurred:" << std::endl << "\t\"" << err.what() << "\"" << std::endl;
+    display_help(argv[0], err.what());
     return 1;
   }
   return 0;

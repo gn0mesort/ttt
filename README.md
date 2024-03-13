@@ -57,6 +57,15 @@ process. First, prepare a build directory by executing:
 meson setup build
 ```
 
+Or
+
+```sh
+meson setup build -Dbuildtype=release
+```
+
+For an optimized build.
+
+
 Next, compile and link the software by executing:
 
 ```sh
@@ -68,6 +77,8 @@ Meson should handle the rest. After building, if you would like to run tests, yo
 ```sh
 meson test -C build
 ```
+
+Tests are only available for debug builds.
 
 # Playing
 
@@ -115,5 +126,4 @@ ttt-delete-game
 
 This will read back the current game data file, verify that it is a valid game data file, and then delete it. If the
 game data file can't be verified, no action will be taken.
-
 
