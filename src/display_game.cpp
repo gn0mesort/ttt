@@ -1,3 +1,10 @@
+/**
+ * @file display_game.cpp
+ * @brief Game state display application.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include <iostream>
 #include <exception>
 #include <filesystem>

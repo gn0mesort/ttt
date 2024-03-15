@@ -1,3 +1,10 @@
+/**
+ * @file utility.cpp
+ * @brief Utility functions for Tic-Tac-Toe.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include "megatech/ttt/utility.hpp"
 
 #include <cstdlib>
@@ -23,29 +30,29 @@ namespace {
 
   template <megatech::ttt::details::byte_range Range>
   std::vector<char> deobfuscate(Range&& r) {
+    // Frobnicate accepts any forward range of bytes but the interpreter requires that they're also contiguous.
+    // Making a copy ensures a contiguous block of memory and that the input is not deobfuscated in place.
     auto cpy = std::vector<std::ranges::range_value_t<Range>>{ std::ranges::begin(r), std::ranges::end(r) };
     megatech::ttt::details::frobnicate(cpy);
+    // Generate a standard 64KiB interpreter.
     auto interp = megatech::ttt::details::interpreter{ };
     return interp.execute(cpy);
   }
 
   std::string secret(const std::string& password) {
+    constexpr auto MAX_SECRETS = std::size_t{ 2 };
     // Secrets must not contain 0 bytes in their body.
-    auto secrets = std::array<std::string, 2>{ std::string{ reinterpret_cast<const char*>(secret_001) },
-                                               std::string{ reinterpret_cast<const char*>(secret_002) } };
-    auto responses = std::array<std::string, 2>{ std::string{ reinterpret_cast<const char*>(response_001) },
-                                                 std::string{ reinterpret_cast<const char*>(response_002) } };
+    auto secrets = std::array<std::string, MAX_SECRETS>{ std::string{ reinterpret_cast<const char*>(secret_001) },
+                                                         std::string{ reinterpret_cast<const char*>(secret_002) } };
+    auto responses = std::array<std::string, MAX_SECRETS>{ std::string{ reinterpret_cast<const char*>(response_001) },
+                                                           std::string{ reinterpret_cast<const char*>(response_002) } };
+    for (auto i = std::size_t{ 0 }; i < MAX_SECRETS; ++i)
     {
-      auto index = 0;
-      for (const auto& secret : secrets)
+      auto clear = deobfuscate(secrets[i]);
+      if (password == std::string_view{ clear.data(), clear.size() })
       {
-        auto clear = deobfuscate(secret);
-        if (password == std::string_view{ clear.data(), clear.size() })
-        {
-          clear = deobfuscate(responses[index]);
-          return std::string{ std::string_view{ clear.data(), clear.size() } };
-        }
-        ++index;
+        clear = deobfuscate(responses[i]);
+        return std::string{ std::string_view{ clear.data(), clear.size() } };
       }
     }
     return "";
@@ -57,6 +64,8 @@ namespace megatech::ttt {
 
   std::uint32_t initialize(const int argc, const char *const *const argv) {
     std::locale::global(std::locale{ "" });
+    // At least argv[0] needs to be a valid string.
+    // Really, argv[argc] should also be nullptr. I'm not going to bother with that for this though.
     if (argc < 1)
     {
       return 1;

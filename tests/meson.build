@@ -1,3 +1,8 @@
+# @file meson.build
+# @brief Test build script.
+# @author Alexander Rothman <gnomesort@megate.ch>
+# @date 2024
+# @copyright AGPL-3.0+
 if get_option('buildtype') == 'debug' or get_option('buildtype') == 'debugoptimized'
   file_locking_test_exe = executable('file_locking_test', files('file_locking.cpp'), dependencies: ttt_dep)
   test('File Locking', file_locking_test_exe, is_parallel: false)

@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-
+# @file generate_coverage.py
+# @brief Test coverage report generation script.
+# @author Alexander Rothman <gnomesort@megate.ch>
+# @date 2024
+# @copyright AGPL-3.0+
 import os
 import sys
 import subprocess

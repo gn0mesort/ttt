@@ -35,3 +35,10 @@
 *.lcov.info
 coverage/
 coverage-*/
+
+# Doxygen
+doc/
+
+# Valgrind
+callgrind*
+cachegrind*

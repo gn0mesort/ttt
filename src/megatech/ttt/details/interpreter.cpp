@@ -1,3 +1,10 @@
+/**
+ * @file interpreter.cpp
+ * @brief Embedded language interpreter.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include "megatech/ttt/details/interpreter.hpp"
 
 #include <cstring>

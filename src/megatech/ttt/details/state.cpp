@@ -1,3 +1,10 @@
+/**
+ * @file state.cpp
+ * @brief Game state management object.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include "megatech/ttt/details/state.hpp"
 
 #include <bit>
@@ -42,6 +49,11 @@ namespace megatech::ttt::details {
   }
 
   void state::mode(const game_mode gm) {
+    const auto gm_bits = static_cast<std::uint32_t>(gm);
+    if (gm_bits != 0x80'00'00'00 && gm_bits != 0)
+    {
+      throw std::runtime_error{ "The game mode was invalid." };
+    }
     m_data = (m_data & ~GAME_MODE_MASK) | static_cast<std::uint32_t>(gm);
   }
 

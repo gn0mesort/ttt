@@ -1,3 +1,10 @@
+/**
+ * @file take_turn.cpp
+ * @brief Tic-Tac-Toe turn taking application.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include <iostream>
 #include <stdexcept>
 #include <filesystem>

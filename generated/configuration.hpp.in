@@ -1,3 +1,10 @@
+/**
+  * @file configuration.hpp.in
+  * @brief Project configuration template.
+  * @author Alexander Rothman <gnomesort@megate.ch>
+  * @date 2024
+  * @copyright AGPL-3.0+
+  */
 #ifndef CONFIGURATION_HPP
 #define CONFIGURATION_HPP
 

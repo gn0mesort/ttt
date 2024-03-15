@@ -1,3 +1,10 @@
+/**
+ * @file strategy.cpp
+ * @brief Tic-Tac-Toe CPU player strategy objects.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include "megatech/ttt/strategy.hpp"
 
 #include <stdexcept>
@@ -15,6 +22,7 @@ namespace {
 namespace megatech::ttt {
 
   cell_location strategy::find_edge(const details::state& st) const {
+    // Edge cells are neither a corner nor the center cell.
     auto available = std::vector<cell_location>{ };
     if (st.is_cell_empty(1, 0))
     {
@@ -89,24 +97,30 @@ namespace megatech::ttt {
   std::vector<cell_location> strategy::find_empty_locations(const details::state& st) const {
     if (st.is_board_empty())
     {
+      // This is every cell.
       return { { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }, { 0, 2 }, { 1, 2 }, { 2, 2 } };
     }
     auto res = std::vector<cell_location>{ };
     auto column = std::size_t{ 0 };
     auto row = std::size_t{ 0 };
+    // Retrieve the board bits from the state.
     auto board = st.board();
+    // For each of the 9 cells
     for (auto i = 0; i < 9; ++i)
     {
+      // If the cell is empty, push it.
       if (!(board & details::state::ALL_CELL_BITS))
       {
         res.push_back({ column, row });
       }
+      // Move to the next cell.
       ++column;
       if (column > 2)
       {
         ++row;
         column = 0;
       }
+      // Shift the current cell off the board.
       board >>= 2;
     }
     return res;

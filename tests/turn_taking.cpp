@@ -1,3 +1,10 @@
+/**
+ * @file turn_taking.cpp
+ * @brief Game turn taking and state update test.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include <cassert>
 
 #include <filesystem>

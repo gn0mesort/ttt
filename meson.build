@@ -1,3 +1,8 @@
+# @file meson.build
+# @brief Main project build script.
+# @author Alexander Rothman <gnomesort@megate.ch>
+# @date 2024
+# @copyright AGPL-3.0+
 project(
   'ttt',
   [ 'cpp' ],
@@ -13,6 +18,11 @@ project(
   ],
   subproject_dir: 'lib'
 )
+
+doxygen = find_program('doxygen', required: false, disabler: true)
+
+custom_target('documentation', output: 'doc', command: [ doxygen, files('Doxyfile') ], build_always_stale: true)
+
 
 ttt_config = configuration_data()
 if true
@@ -38,33 +48,35 @@ ttt_lib_srcs = [
         'src/megatech/ttt/details/interpreter.cpp')
 ]
 
-ttt_lib = library(meson.project_name(), ttt_lib_srcs, include_directories: ttt_lib_incs)
+ttt_lib = library(meson.project_name(), ttt_lib_srcs, include_directories: ttt_lib_incs, install: true)
 ttt_dep = declare_dependency(link_with: ttt_lib, include_directories: ttt_lib_incs)
 
 ttt_new_game_srcs = [
   files('src/new_game.cpp')
 ]
 
-ttt_new_game_exe = executable('@0@-new-game'.format(meson.project_name()), ttt_new_game_srcs, dependencies: ttt_dep)
+ttt_new_game_exe = executable('@0@-new-game'.format(meson.project_name()), ttt_new_game_srcs, dependencies: ttt_dep,
+                              install: true)
 
 ttt_delete_game_srcs = [
   files('src/delete_game.cpp')
 ]
 
 ttt_delete_game_exe = executable('@0@-delete-game'.format(meson.project_name()), ttt_delete_game_srcs,
-                                 dependencies: ttt_dep)
+                                 dependencies: ttt_dep, install: true)
 
 ttt_display_game_srcs = [
   files('src/display_game.cpp')
 ]
 
 ttt_display_game_exe = executable('@0@-display-game'.format(meson.project_name()), ttt_display_game_srcs,
-                                  dependencies: ttt_dep)
+                                  dependencies: ttt_dep, install: true)
 
 ttt_take_turn_srcs = [
   files('src/take_turn.cpp')
 ]
 
-ttt_take_turn_exe = executable('@0@-take-turn'.format(meson.project_name()), ttt_take_turn_srcs, dependencies: ttt_dep)
+ttt_take_turn_exe = executable('@0@-take-turn'.format(meson.project_name()), ttt_take_turn_srcs, dependencies: ttt_dep,
+                               install: true)
 
 subdir('tests')

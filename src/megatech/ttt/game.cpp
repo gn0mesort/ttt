@@ -1,3 +1,10 @@
+/**
+ * @file game.cpp
+ * @brief Tic-Tac-Toe game state objects.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include "megatech/ttt/game.hpp"
 
 #include <cstring>
@@ -51,7 +58,7 @@ namespace megatech::ttt {
     for (auto i = 0; i < 3; ++i)
     {
       if (m_state.is_row_x(i))
-      {
+    {
         return cell_contents::x;
       }
       if (m_state.is_row_o(i))
@@ -107,6 +114,7 @@ namespace megatech::ttt {
       m_state.phase(game_phase::turn_x);
       return;
     default:
+      // Unless something is really broken this can't happen.
       assert(((void) "Unreachable", false));
     }
   }

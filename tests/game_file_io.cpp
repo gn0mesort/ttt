@@ -1,3 +1,10 @@
+/**
+ * @file game_file_io.cpp
+ * @brief Game data file I/O test.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include <cassert>
 #include <cstring>
 #include <cstddef>
@@ -5,8 +12,8 @@
 #include <filesystem>
 #include <fstream>
 
-#include "megatech/ttt/game.hpp"
-#include "megatech/ttt/details/data_file.hpp"
+#include <megatech/ttt/game.hpp>
+#include <megatech/ttt/details/data_file.hpp>
 
 #define GAME_FILE_NAME ".ttt"
 #define LOCK_FILE_NAME ".~lock.ttt"

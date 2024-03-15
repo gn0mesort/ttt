@@ -57,13 +57,13 @@ process. First, prepare a build directory by executing:
 meson setup build
 ```
 
-Or
+or
 
 ```sh
 meson setup build -Dbuildtype=release
 ```
 
-For an optimized build.
+for an optimized build.
 
 
 Next, compile and link the software by executing:
@@ -127,3 +127,20 @@ ttt-delete-game
 This will read back the current game data file, verify that it is a valid game data file, and then delete it. If the
 game data file can't be verified, no action will be taken.
 
+# Generating Documentation
+
+If you have [Doxygen](https://www.doxygen.nl/index.html) installed, you can generate HTML documentation with the
+following:
+
+```sh
+meson compile -C build documentation
+```
+
+The resulting files will be placed in the `doc` directory of your build directory.
+
+# Licensing
+
+This software is made available, free of charge, under the terms of the
+[GNU Affero General Public License version 3](https://www.gnu.org/licenses/agpl-3.0.html)
+or any later version. A complete copy of the license can be found in the LICENSE file that you should have received
+with this software.

@@ -1,3 +1,10 @@
+/**
+ * @file strategy.cpp
+ * @brief Single player game strategy test.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include <cassert>
 
 #include <megatech/ttt/enums.hpp>

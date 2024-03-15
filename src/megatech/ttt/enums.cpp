@@ -1,9 +1,15 @@
+/**
+ * @file enums.cpp
+ * @brief Enumeration types for Tic-Tac-Toe.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include "megatech/ttt/enums.hpp"
 
 #include <stdexcept>
 
 namespace megatech::ttt {
-
 
   std::string to_string(const game_mode gm) {
     switch (gm)
@@ -39,7 +45,7 @@ namespace megatech::ttt {
     case cell_contents::o:
       return "O";
     default:
-      throw std::runtime_error{ "The input cc was not a valid enumeration value." };
+      throw std::runtime_error{ "The input cell content was not a valid enumeration value." };
     }
   }
 

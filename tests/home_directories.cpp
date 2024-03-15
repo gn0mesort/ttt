@@ -1,3 +1,10 @@
+/**
+ * @file home_directories.cpp
+ * @brief Home directory detection test.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include <cassert>
 #include <cstdlib>
 

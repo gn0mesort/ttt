@@ -1,3 +1,10 @@
+/**
+ * @file lockfile.cpp
+ * @brief File locking utility object.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include "megatech/ttt/details/lockfile.hpp"
 
 #include <string>

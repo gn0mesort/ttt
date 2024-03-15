@@ -1,6 +1,13 @@
+/**
+ * @file file_locking.cpp
+ * @brief File locking test.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include <cassert>
 
-#include "megatech/ttt/details/lockfile.hpp"
+#include <megatech/ttt/details/lockfile.hpp>
 
 constexpr const char* LOCK_NAME{ "x" };
 

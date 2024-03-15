@@ -1,3 +1,10 @@
+/**
+ * @file new_game.cpp
+ * @brief Game data file initialization application.
+ * @author Alexander Rothman <gnomesort@megate.ch>
+ * @date 2024
+ * @copyright AGPL-3.0+
+ */
 #include <stdexcept>
 #include <filesystem>
 #include <iostream>
