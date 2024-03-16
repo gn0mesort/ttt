@@ -65,7 +65,7 @@ namespace megatech::ttt::details {
     if (m_underlying)
     {
       std::fclose(m_underlying);
-      std::remove(m_lock_path.c_str());
+      std::filesystem::remove_all(m_lock_path);
       m_underlying = nullptr;
     }
   }
