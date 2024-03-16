@@ -36,6 +36,9 @@ namespace megatech::ttt {
     std::size_t row;
   };
 
+  /**
+   * @brief An object representing a strategy for the second player (O) of a Tic-Tac-Toe game.
+   */
   class strategy final {
   private:
     static constexpr cell_location INVALID_LOCATION{ std::numeric_limits<std::size_t>::max(),

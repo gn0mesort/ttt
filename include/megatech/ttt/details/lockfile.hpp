@@ -15,7 +15,7 @@
 namespace megatech::ttt::details {
 
   /**
-   * An object representing a lockfile.
+   * @brief An object representing a lockfile.
    */
   class lockfile final {
   private:
